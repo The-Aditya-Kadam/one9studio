@@ -1,0 +1,16 @@
+services:
+  - type: web
+    runtime: static
+    name: one9studio
+    repo: https://github.com/agencywork187-commits/one9studio
+    branch: main
+    buildCommand: mkdir -p dist && cp index.html styles.css app.js dist/ && cp -R assets dist/
+    staticPublishPath: dist
+    autoDeployTrigger: commit
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
