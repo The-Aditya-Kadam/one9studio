@@ -1,32 +1,319 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>one9studio — A New Dimension. Coming Soon.</title><meta name="description" content="A new dimension of creativity is coming. one9studio brings brands, talent and bold ideas together."><meta name="theme-color" content="#090b14"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<style>
-@font-face{font-family:Syne;src:url('assets/font-2.woff2') format('woff2');font-weight:400 900;font-display:swap}@font-face{font-family:Manrope;src:url('assets/font-1.woff2') format('woff2');font-weight:400 800;font-display:swap}*{box-sizing:border-box}html{background:#090b14;color:#fff}body{margin:0;font-family:Manrope,Arial,sans-serif;min-height:100svh;overflow-x:hidden;background:radial-gradient(ellipse at 75% 42%,#29162f66,transparent 50%),#090b14}button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:2px solid #ffc83d;outline-offset:6px}.shell{width:min(1420px,calc(100% - 100px));margin:auto;position:relative;z-index:2}header{height:115px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ffffff12}.logo{font-family:Syne,Arial,sans-serif;font-weight:800;font-size:30px;letter-spacing:-1.5px}.logo span{color:#ff3d81}.status{display:flex;align-items:center;gap:10px;font-size:9px;letter-spacing:2px;color:#bbbdcb}.dot{width:6px;height:6px;background:#ffc83d;border-radius:50%;box-shadow:0 0 12px #ffc83d;animation:pulse 3s infinite}.layout{display:grid;grid-template-columns:1.1fr 1fr;min-height:calc(100svh - 210px);align-items:center;position:relative;padding-block:60px}.copy{position:relative;z-index:3;pointer-events:none}.eyebrow{display:flex;gap:12px;align-items:center;font-size:9px;letter-spacing:3px;color:#ffc83d;font-weight:700;margin:0 0 30px}.eyebrow::before{content:'';height:1px;width:33px;background:#ffc83d}h1{font:800 clamp(56px,6.8vw,100px)/.99 Syne,Arial,sans-serif;letter-spacing:-5px;margin:0 0 30px;max-width:760px}h1 em{font-family:Georgia,serif;font-weight:400;color:#ff3d81}h1 .line{display:block}.intro{font-size:14px;line-height:1.9;color:#acaec2;max-width:370px;margin:0 0 30px}.launch-label{display:flex;align-items:center;gap:14px;font-size:11px;font-weight:700;letter-spacing:4px;pointer-events:auto}.launch-label span{background:#ff3d81;width:35px;height:2px}.actions{display:flex;align-items:center;gap:22px;margin-top:32px;pointer-events:auto}.action{background:transparent;border:1px solid #ffffff2b;border-radius:100px;padding:13px 19px;font-size:10px;display:flex;align-items:center;gap:16px;transition:background .2s,transform .2s}.action:hover{background:#ffffff0d;transform:translateY(-2px)}.action b{font-size:16px;color:#ffc83d}.motion-button{background:none;border:0;color:#8b8eaa;font-size:9px;padding:12px 0}.note{font-size:10px;color:#84879e;min-height:16px;margin-top:15px}.visual{height:min(610px,65vw);position:relative;min-width:0;isolation:isolate}.visual::before{content:'';position:absolute;width:90%;height:80%;left:5%;top:10%;border-radius:50%;background:radial-gradient(ellipse,#ff3d811c,transparent 65%);filter:blur(30px)}canvas{width:130%;height:120%;position:absolute;left:-15%;top:-10%;z-index:2;touch-action:pan-y}.halo{position:absolute;inset:10%;border:1px solid #f8cc7830;border-radius:50%;transform:rotateX(65deg) rotateZ(-22deg);z-index:0}.halo.second{inset:0;transform:rotateX(45deg) rotateY(-30deg) rotateZ(50deg);border-color:#ffffff0c}.visual-label{position:absolute;z-index:3;padding:10px 14px;border:1px solid #ffffff25;background:#14142199;backdrop-filter:blur(10px);border-radius:6px;color:#b8b6cd;font:9px Manrope,Arial,sans-serif;letter-spacing:.4px;box-shadow:0 12px 35px #0003}.label-one{left:1%;top:17%;transform:rotate(-8deg)}.label-one b{color:#ff3d81;margin-right:7px}.label-two{right:-1%;bottom:19%;transform:rotate(7deg);color:#ffc83d}.visual-caption{position:absolute;bottom:4%;left:50%;translate:-50% 0;white-space:nowrap;font:8px Manrope,sans-serif;color:#74778e;letter-spacing:3px}.vertical{position:absolute;right:-28px;top:38%;writing-mode:vertical-rl;color:#4e526c;letter-spacing:3px;font-size:8px}.footer{border-top:1px solid #ffffff12;min-height:95px;display:flex;justify-content:space-between;align-items:center;gap:25px}.footer p{font-size:9px;color:#7b7f96}.specialties{font-size:8px;color:#b0b1c3;letter-spacing:1.5px;display:flex;align-items:center;gap:15px}.specialties i{font-style:normal;color:#ff3d81;font-size:12px}.coordinates{position:absolute;top:22px;right:0;font:8px monospace;color:#6b6d86;letter-spacing:2px}.grain{position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' d='M0 0h160v160H0z'/%3E%3C/svg%3E")}.fallback{position:absolute;inset:10%;perspective:800px;display:grid;place-items:center}.fallback .ball{width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#ffe6ee,#ff639a 20%,#c41456 65%,#200b23);box-shadow:20px 35px 50px #0007}.fallback .ring{position:absolute;width:320px;height:320px;border:40px solid #ffc83d;border-radius:50%;transform:rotateX(62deg) rotateZ(-25deg);box-shadow:8px 12px 0 #9d6520,inset 4px 5px 4px #fff8}.webgl-ready .fallback{visibility:hidden}@keyframes pulse{50%{opacity:.45;box-shadow:0 0 3px #ffc83d}}@media(min-width:1500px){h1{font-size:100px}.layout{min-height:740px}}@media(max-width:1000px){.shell{width:calc(100% - 64px)}h1{font-size:68px;letter-spacing:-3.5px}.visual{height:480px}.label-two{right:0}.specialties{gap:9px;font-size:7px}.intro{max-width:320px}.vertical{right:-20px}}@media(max-width:700px){.shell{width:calc(100% - 40px)}header{height:86px}.logo{font-size:25px}.status{font-size:7px;letter-spacing:1px}.layout{grid-template-columns:1fr;padding-top:43px;padding-bottom:28px;min-height:0}.eyebrow{font-size:8px;margin-bottom:23px}h1{font-size:clamp(52px,12vw,76px);letter-spacing:-3px;margin-bottom:23px}.intro{font-size:12px;max-width:330px;margin-bottom:22px}.launch-label{font-size:9px}.actions{margin-top:22px}.visual{height:350px;max-width:430px;width:100%;margin:-5px auto 0}.coordinates{display:none}.label-one{top:14%;left:0}.label-two{bottom:16%;right:0}.visual-caption{bottom:0;font-size:7px}.footer{min-height:120px;flex-wrap:wrap;justify-content:center;padding:22px 0;gap:9px;text-align:center}.specialties{width:100%;justify-content:center;flex-wrap:wrap;font-size:7px}.footer p{margin:0;font-size:8px}.vertical{display:none}.fallback .ball{width:150px;height:150px}.fallback .ring{width:250px;height:250px;border-width:30px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
-</style></head><body><div class="grain" aria-hidden="true"></div><div class="shell"><header><div class="logo" aria-label="one9studio">one9<span>studio</span><span aria-hidden="true">.</span></div><div class="status"><span class="dot" aria-hidden="true"></span> SOMETHING GOOD IS TAKING SHAPE</div></header><main class="layout"><div class="coordinates" aria-hidden="true">O9 / A NEW DIMENSION</div><div class="copy"><p class="eyebrow">THE NEXT CHAPTER STARTS HERE</p><h1><span class="line">A new</span><span class="line"><em>dimension</em></span><span class="line">of creativity.</span></h1><p class="intro">Big ideas are taking shape. We’re building a space where brands, talent and extraordinary possibilities come together.</p><div class="launch-label"><span aria-hidden="true"></span> COMING SOON</div><div class="actions"><button class="action" id="share">Share the anticipation <b aria-hidden="true">↗</b></button><button class="motion-button" id="motion" aria-pressed="false">Pause motion Ⅱ</button></div><p class="note" id="share-status" role="status"></p></div><div class="visual" role="img" aria-label="An animated three-dimensional gold orbit around a glossy pink sphere"><div class="fallback" aria-hidden="true"><div class="ball"></div><div class="ring"></div></div><div class="halo" aria-hidden="true"></div><div class="halo second" aria-hidden="true"></div><canvas id="scene" aria-hidden="true"></canvas><span class="visual-label label-one" aria-hidden="true"><b>✦</b> Ideas in orbit</span><span class="visual-label label-two" aria-hidden="true">A little out of the ordinary ↗</span><span class="visual-caption" aria-hidden="true">CREATIVITY HAS NO FIXED ORBIT</span><span class="vertical" aria-hidden="true">BUILT FOR WHAT’S NEXT</span></div></main><footer class="footer"><div class="specialties">BRANDS <i>✦</i> TALENT <i>✦</i> INFLUENCE <i>✦</i> EXPERIENCES</div><p>© <span id="year">2026</span> one9studio. All rights reserved.</p><p>Seen. Heard. Remembered.</p></footer></div>
-<script>
-'use strict';
-document.querySelector('#year').textContent=new Date().getFullYear();
-const shareStatus=document.querySelector('#share-status');
-document.querySelector('#share').addEventListener('click',async()=>{const url=location.href.split('#')[0];try{if(navigator.share){await navigator.share({title:'one9studio — Coming soon',text:'A new dimension of creativity is coming.',url});shareStatus.textContent='Thanks for sharing.';}else{await navigator.clipboard.writeText(url);shareStatus.textContent='Page link copied. Share it with someone creative.';}}catch(error){if(error.name!=='AbortError')shareStatus.textContent='Share this page by copying its address from your browser.';}});
-const canvas=document.querySelector('#scene'),visual=document.querySelector('.visual'),motion=document.querySelector('#motion'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
-let paused=reduced.matches,frame=0,clock=0,last=0,program,gl,lost=false;const pointer={x:0,y:0};
-function updateButton(){motion.textContent=paused?'Play motion ▷':'Pause motion Ⅱ';motion.setAttribute('aria-pressed',String(paused));}
-updateButton();
-function shader(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error('Shader unavailable');return s;}
-function initialize(){gl=canvas.getContext('webgl',{alpha:true,antialias:false,powerPreference:'low-power'});if(!gl)throw new Error('WebGL unavailable');program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,'attribute vec2 position;void main(){gl_Position=vec4(position,0.,1.);}'));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,`
-precision highp float;
-uniform vec2 resolution;uniform float time;uniform vec2 pointer;
-mat2 rot(float a){return mat2(cos(a),-sin(a),sin(a),cos(a));}
-vec2 scene(vec3 p){vec3 q=p; q.y-=.11*sin(time*.6);float sphere=length(q)-.70;vec3 t=q;t.xz=rot(time*.16+pointer.x*.18)*t.xz;t.yz=rot(.72+.14*sin(time*.4)+pointer.y*.13)*t.yz;float torus=length(vec2(length(t.xz)-1.11,t.y))-.19;vec2 result=sphere<torus?vec2(sphere,1.):vec2(torus,2.);vec3 s=q-vec3(1.12,.95,.08);s.xy=rot(time*.25)*s.xy;float jewel=(abs(s.x)+abs(s.y)+abs(s.z)-.25)*.577;return jewel<result.x?vec2(jewel,3.):result;}
-vec3 normal(vec3 p){vec2 e=vec2(.001,0);return normalize(vec3(scene(p+e.xyy).x-scene(p-e.xyy).x,scene(p+e.yxy).x-scene(p-e.yxy).x,scene(p+e.yyx).x-scene(p-e.yyx).x));}
-void main(){vec2 uv=(gl_FragCoord.xy-.5*resolution)/resolution.y;vec3 ro=vec3(pointer.x*.13,.35+pointer.y*.10,4.9);vec3 target=vec3(0,.0,0);vec3 forward=normalize(target-ro);vec3 right=normalize(cross(forward,vec3(0,1,0)));vec3 up=cross(right,forward);vec3 rd=normalize(forward+uv.x*right*2.15+uv.y*up*2.15);float distance=0.;vec2 hit;for(int i=0;i<80;i++){hit=scene(ro+rd*distance);if(hit.x<.0015||distance>8.)break;distance+=hit.x*.8;}if(distance>8.){gl_FragColor=vec4(0);return;}vec3 p=ro+rd*distance;vec3 n=normal(p);vec3 view=normalize(ro-p);vec3 light=normalize(vec3(-3,5,4));float diff=max(dot(n,light),0.);float spec=pow(max(dot(reflect(-light,n),view),0.),70.);float fres=pow(1.-max(dot(n,view),0.),3.);vec3 base=hit.y<1.5?vec3(.82,.035,.25):vec3(.94,.53,.10);if(hit.y>2.5)base=vec3(.95,.60,.17);float bands=.5+.5*sin(n.y*9.+n.x*2.);vec3 color=base*(.22+.7*diff)+vec3(1.,.91,.78)*spec*1.4+base*fres*.65;vec3 reflection=mix(vec3(.04,.025,.08),vec3(.9,.68,.40),smoothstep(.35,.65,bands));if(hit.y>1.5)color=mix(color,reflection,.3)+spec*.7;else color+=vec3(.30,.015,.12)*max(-n.x,0.);color=pow(color,vec3(.87));gl_FragColor=vec4(color,1.);}
-`));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw new Error('3D unavailable');gl.useProgram(program);const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);const position=gl.getAttribLocation(program,'position');gl.enableVertexAttribArray(position);gl.vertexAttribPointer(position,2,gl.FLOAT,false,0,0);visual.classList.add('webgl-ready');}
-function draw(timestamp){frame=0;if(lost||document.hidden)return;if(!paused&&last)clock+=Math.min((timestamp-last)/1000,.05);last=timestamp;const rect=canvas.getBoundingClientRect();const ratio=Math.min(devicePixelRatio||1,innerWidth<700?1:1.35);const width=Math.max(1,Math.round(rect.width*ratio)),height=Math.max(1,Math.round(rect.height*ratio));if(canvas.width!==width||canvas.height!==height){canvas.width=width;canvas.height=height;gl.viewport(0,0,width,height);}gl.uniform2f(gl.getUniformLocation(program,'resolution'),width,height);gl.uniform1f(gl.getUniformLocation(program,'time'),clock+1.4);gl.uniform2f(gl.getUniformLocation(program,'pointer'),paused?0:pointer.x,paused?0:pointer.y);gl.drawArrays(gl.TRIANGLES,0,6);if(!paused)frame=requestAnimationFrame(draw);}
-function requestDraw(){if(gl&&!lost&&!frame)frame=requestAnimationFrame(draw);}
-try{initialize();requestDraw();}catch(error){canvas.hidden=true;motion.hidden=true;}
-motion.addEventListener('click',()=>{paused=!paused;last=0;updateButton();requestDraw();});
-reduced.addEventListener('change',event=>{paused=event.matches;last=0;updateButton();requestDraw();});
-visual.addEventListener('pointermove',event=>{if(paused||event.pointerType==='touch')return;const r=visual.getBoundingClientRect();pointer.x=(event.clientX-r.left)/r.width*2-1;pointer.y=-((event.clientY-r.top)/r.height*2-1);});visual.addEventListener('pointerleave',()=>{pointer.x=0;pointer.y=0;});
-addEventListener('resize',requestDraw);document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0;last=0;}else requestDraw();});
-canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();lost=true;cancelAnimationFrame(frame);frame=0;visual.classList.remove('webgl-ready');motion.hidden=true;});
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sampling Store — All Samples. One Place.</title>
+<meta name="description" content="India's shared sample warehouse for corporate gifting. Browse the Diwali Edit 2026 catalogue, get daily new products on WhatsApp and connect with 25+ verified importers and manufacturers.">
+<link rel="canonical" href="https://www.one9studio.in/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sampling Store">
+<meta property="og:url" content="https://www.one9studio.in/">
+<meta property="og:title" content="Sampling Store — All Samples. One Place.">
+<meta property="og:description" content="India's shared sample warehouse for corporate gifting. Browse the Diwali Edit 2026 catalogue, get daily new products on WhatsApp and connect with 25+ verified importers and manufacturers.">
+<meta property="og:image" content="https://www.one9studio.in/assets/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#05071a">
+<link rel="icon" href="assets/favicon.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=20261024b">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="container bar">
+    <a class="brand" href="#top">
+      <span class="cube"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></span>
+      Sampling Store
+    </a>
+    <ul>
+      <li><a href="#why">Why us</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="/diwali-edit">Diwali Edit</a></li>
+      <li><a href="#community">Community</a></li>
+      <li><a href="/suppliers">Suppliers</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn btn-primary" href="https://www.samplingstore.in/diwali-edit/">Diwali Catalogue</a>
+    <button class="burger" id="burger" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <canvas id="scene"></canvas>
+  <div class="container">
+    <div>
+      <span class="pill rv"><b>New</b><span class="dot"></span> Diwali Edit 2026 catalogue is live</span>
+      <h1 class="rv d1">
+        <span class="line">Your Diwali</span>
+        <span class="line grad">Corporate Gifting Hub</span>
+        <span class="line">launched by importers.</span>
+      </h1>
+      <p class="lead rv d2">One shared sample warehouse. 25+ verified importers and manufacturers. Price lists, MOQs and lead times in a single catalogue, with a daily dose of new products on WhatsApp.</p>
+      <div class="cta rv d3">
+        <a class="btn btn-primary" href="https://www.samplingstore.in/diwali-edit/">
+          Explore Diwali Catalogue
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="https://chat.whatsapp.com/HN5JDJb3R6o8U8PkhJVSUG" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="#25d366"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
+          Join WhatsApp Community
+        </a>
+      </div>
+      <div class="stats rv d4">
+        <div class="stat"><b data-count="2000">0</b><span>Gifters in the community</span></div>
+        <div class="stat"><b data-count="25">0</b><span>Suppliers onboard</span></div>
+        <div class="stat"><b>1</b><span>Shared sample warehouse, Mumbai</span></div>
+      </div>
+    </div>
+
+    <div class="hero-art rv d2" id="heroArt">
+      <div class="fcard a">
+        <div class="thumb"><img src="assets/gift.png" alt=""></div>
+        <span class="tag">Gift Hampers</span>
+        <h4>Premium Diwali Hamper</h4>
+        <small>MOQ 50 · 7-day lead time</small>
+        <div class="price">₹1,250 <i>/unit</i></div>
+      </div>
+      <div class="fcard b">
+        <div class="mini"><span class="av"></span><div><b>Sampling Bot</b><small>Typically replies instantly</small></div></div>
+        <div class="wa">● Daily dose of new products</div>
+      </div>
+      <div class="fcard c">
+        <div class="thumb blue"><svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></div>
+        <span class="tag">Shared Warehouse</span>
+        <h4>Stock samples once</h4>
+        <small>Brands deposit, buyers browse</small>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- LOGO MARQUEE -->
+<section class="marquee-wrap" id="suppliers-logos">
+  <p>Suppliers onboard · importers &amp; manufacturers</p>
+  <div class="marquee"><div class="track" id="track"></div></div>
+</section>
+
+<!-- WHY -->
+<section class="sec" id="why">
+  <span class="blob" style="width:520px;height:520px;background:rgba(42,68,255,.25);left:-200px;top:0"></span>
+  <div class="container">
+    <div class="sec-head rv">
+      <span class="eyebrow">Why Sampling Store</span>
+      <h2>All samples. <span class="grad">One place.</span></h2>
+      <p>A centralized hub where brands and manufacturers stock their product samples. Instead of sending samples one by one, they deposit them once and every corporate buyer can see, touch and order.</p>
+    </div>
+    <div class="grid3">
+      <article class="tilt rv d1">
+        <span class="num">01</span>
+        <div class="icon3d"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></div>
+        <h3>Shared sample warehousing</h3>
+        <p>Deposit samples at one Andheri hub and stop couriering the same product to every buyer. One stock, unlimited viewings.</p>
+      </article>
+      <article class="tilt rv d2">
+        <span class="num">02</span>
+        <div class="icon3d gold"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 2l7 3v6c0 5-3.5 9-7 11-3.5-2-7-6-7-11V5z"/></svg></div>
+        <h3>Verified importers &amp; makers</h3>
+        <p>Every supplier is onboarded and vetted. Pricing, MOQs, customisation options and lead times are published, not guessed.</p>
+      </article>
+      <article class="tilt rv d3">
+        <span class="num">03</span>
+        <div class="icon3d teal"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 20V9"/><path d="M14 13l2 2 3-3"/></svg></div>
+        <h3>Daily dose of new products</h3>
+        <p>New launches land in the WhatsApp community every day. Spot a product, tap once, and the Sampling Bot connects you with the supplier.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="sec" id="how" style="padding-top:20px">
+  <div class="container">
+    <div class="sec-head rv">
+      <span class="eyebrow">How it works</span>
+      <h2>From sample to <span class="grad">signed order</span> in three steps.</h2>
+    </div>
+    <div class="steps">
+      <div class="step rv d1">
+        <div class="cube3d"><i>1</i><i>1</i><i>1</i><i>1</i><i>1</i><i>1</i></div>
+        <h3>Browse the catalogue</h3>
+        <p>Filter by category or budget range. Create a free account to unlock price lists on every product.</p>
+        <span class="arrow"></span>
+      </div>
+      <div class="step blue rv d2">
+        <div class="cube3d"><i>2</i><i>2</i><i>2</i><i>2</i><i>2</i><i>2</i></div>
+        <h3>Shortlist &amp; build boards</h3>
+        <p>Save products to boards like "Diwali gifts for Infosys", share the board link with your team and finalise together.</p>
+        <span class="arrow"></span>
+      </div>
+      <div class="step teal rv d3">
+        <div class="cube3d"><i>3</i><i>3</i><i>3</i><i>3</i><i>3</i><i>3</i></div>
+        <h3>Enquire on WhatsApp</h3>
+        <p>One tap sends the product and link to Sampling Store on WhatsApp. We connect you with the supplier the same day.</p>
+        <span class="arrow"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIWALI EDIT -->
+<section class="sec" id="diwali">
+  <span class="blob" style="width:600px;height:600px;background:rgba(255,120,40,.18);right:-250px;top:100px"></span>
+  <div class="container">
+    <div class="sec-head rv">
+      <span class="eyebrow">Diwali Edit 2026</span>
+      <h2>Curated corporate gifting, <span class="grad">category by category.</span></h2>
+      <p>Premium gift hampers, dry fruits, sweets, home décor, wellness and stationery. Updated for the gifting season with price lists, MOQs and customisation options.</p>
+    </div>
+    <div class="cats">
+      <a class="cat rv d1" href="https://www.samplingstore.in/diwali-edit/"><span class="glow" style="background:#ffa62b"></span><span class="em">🎁</span><h4>Gift Hampers</h4><small>Curated boxes</small></a>
+      <a class="cat rv d2" href="https://www.samplingstore.in/diwali-edit/"><span class="glow" style="background:#c98a3b"></span><span class="em">🥜</span><h4>Dry Fruits</h4><small>Premium packs</small></a>
+      <a class="cat rv d3" href="https://www.samplingstore.in/diwali-edit/"><span class="glow" style="background:#ff5e2b"></span><span class="em">🍬</span><h4>Sweets</h4><small>Mithai &amp; chocolates</small></a>
+      <a class="cat rv d4" href="https://www.samplingstore.in/diwali-edit/"><span class="glow" style="background:#6c8cff"></span><span class="em">🪔</span><h4>Home Décor</h4><small>Diyas, lanterns</small></a>
+      <a class="cat rv d5" href="https://www.samplingstore.in/diwali-edit/"><span class="glow" style="background:#4fe3ff"></span><span class="em">🌿</span><h4>Wellness</h4><small>Self-care sets</small></a>
+      <a class="cat rv d5" href="https://www.samplingstore.in/diwali-edit/"><span class="glow" style="background:#f7c948"></span><span class="em">✒️</span><h4>Stationery</h4><small>Desk &amp; notebooks</small></a>
+    </div>
+    <div class="ranges rv">
+      <a class="range" href="https://www.samplingstore.in/diwali-edit/">Under ₹500</a>
+      <a class="range" href="https://www.samplingstore.in/diwali-edit/">₹500 – ₹1,000</a>
+      <a class="range" href="https://www.samplingstore.in/diwali-edit/">₹1,000 – ₹2,500</a>
+      <a class="range" href="https://www.samplingstore.in/diwali-edit/">₹2,500 – ₹5,000</a>
+      <a class="range" href="https://www.samplingstore.in/diwali-edit/">₹5,000+</a>
+    </div>
+  </div>
+</section>
+
+<!-- CATALOGUE FEATURE -->
+<section class="sec" style="padding-top:20px">
+  <div class="container feature">
+    <div class="stack rv">
+      <span class="orb"></span>
+      <div class="pcard p1">
+        <div class="img b"><svg width="110" height="110" viewBox="0 0 24 24" fill="none" stroke="#1b2ad6" stroke-width="1.2" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></div>
+        <div class="c">Home Décor</div><h5>Brass Diya Set of 4</h5>
+        <div class="pr"><span class="lock">🔒 Sign in for price</span><span>MOQ 100</span></div>
+      </div>
+      <div class="pcard p2">
+        <div class="img"><img src="assets/gift.png" alt=""></div>
+        <div class="c">Gift Hampers</div><h5>Festive Dry Fruit &amp; Sweets Hamper</h5>
+        <div class="pr"><b>₹1,250 <span>/unit</span></b><span>MOQ 50</span></div>
+      </div>
+      <div class="pcard p3">
+        <div class="img c"><svg width="110" height="110" viewBox="0 0 24 24" fill="none" stroke="#1e9e8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-4 8-7 8-12a8 8 0 1 0-16 0c0 5 4 8 8 12z"/><path d="M12 10v6M9 13h6"/></svg></div>
+        <div class="c">Wellness</div><h5>Aroma &amp; Tea Wellness Box</h5>
+        <div class="pr"><span class="lock">🔒 Sign in for price</span><span>MOQ 25</span></div>
+      </div>
+    </div>
+    <div class="rv d2">
+      <span class="eyebrow">The catalogue</span>
+      <h2 style="font-size:clamp(30px,3.8vw,46px);margin:14px 0 8px">Pricing you can actually plan with.</h2>
+      <p style="color:var(--muted)">The Diwali Edit catalogue is built for procurement teams, not window shopping.</p>
+      <ul>
+        <li><span class="chk"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>Per-unit price lists, MOQs, customisation options and lead times on every product</li>
+        <li><span class="chk"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>Search, category filters and budget ranges that match how you brief</li>
+        <li><span class="chk"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>Free account, no credit card. See pricing on all products instantly</li>
+        <li><span class="chk"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>Print-ready PDF export per category for internal approvals</li>
+      </ul>
+      <a class="btn btn-primary" href="https://www.samplingstore.in/diwali-edit/">Create free account &amp; see prices</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="sec" id="community">
+  <span class="blob" style="width:520px;height:520px;background:rgba(37,211,102,.14);left:40%;bottom:-200px"></span>
+  <div class="container">
+    <div class="sec-head rv">
+      <span class="eyebrow">Community</span>
+      <h2>Join <span class="grad">2000+ gifters</span> on WhatsApp.</h2>
+    </div>
+    <div class="community">
+      <div class="panel big rv d1">
+        <span class="bubble"></span>
+        <div class="counter" data-count="2000">0</div>
+        <h3>Sampling Store WhatsApp Community</h3>
+        <p>Corporate gifting managers, HR teams, agencies and founders sharing what's new, what's trending and what's in stock.</p>
+        <a class="btn btn-wa" href="https://chat.whatsapp.com/HN5JDJb3R6o8U8PkhJVSUG" target="_blank" rel="noopener">Join the community</a>
+      </div>
+      <div class="panel rv d2">
+        <span class="eyebrow">Sampling Bot</span>
+        <h3>Ask, and it answers.</h3>
+        <p>Share a product name or link and the bot connects you with the supplier.</p>
+        <div class="chat">
+          <div class="me">Hi, I'm interested in <b>Brass Diya Set</b>. Can you share more details?</div>
+          <div>Sure! Connecting you with the supplier now. MOQ 100, 5-day lead time. 🪔</div>
+        </div>
+        <a class="btn btn-ghost" href="https://wa.link/g3trf5" target="_blank" rel="noopener">Chat with Sampling Bot</a>
+      </div>
+      <div class="panel rv d3">
+        <span class="eyebrow">Daily dose</span>
+        <h3>One new product. Every day.</h3>
+        <p>A single curated launch dropped daily, with price and MOQ. No spam, no noise.</p>
+        <a class="btn btn-ghost" href="https://chat.whatsapp.com/HN5JDJb3R6o8U8PkhJVSUG" target="_blank" rel="noopener">Get the daily dose</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPLIERS CTA -->
+<section class="sec" id="suppliers" style="padding-top:20px">
+  <div class="container">
+    <div class="cta-band rv">
+      <div>
+        <span class="eyebrow" style="color:#fff">Suppliers onboard</span>
+        <h2>Are you an importer or manufacturer? Put your samples in front of 2000+ buyers.</h2>
+        <p>Deposit your samples once at the Sampling Store. We list, photograph and promote them to the community and the Diwali Edit catalogue.</p>
+        <a class="btn" href="/suppliers">Onboard as a supplier</a>
+      </div>
+      <div class="boxes">
+        <div class="bx one"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="bx two"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="bx three"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT + CONTACT -->
+<section class="sec" id="contact">
+  <div class="container about">
+    <div class="copy rv">
+      <span class="eyebrow">About us</span>
+      <h2 style="font-size:clamp(30px,3.8vw,46px);margin-top:14px">A shared warehouse for the gifting industry.</h2>
+      <p>Sampling Store is a centralized hub where brands and manufacturers can stock their product samples. Instead of individually sending or storing samples, they deposit them at the Sampling Store, which acts as a shared warehouse for every corporate buyer in the network.</p>
+      <p>Headquartered in Andheri East, Mumbai, run by importers who know what the gifting season actually needs.</p>
+      <div class="cta" style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap">
+        <a class="btn btn-wa" href="https://wa.link/g3trf5" target="_blank" rel="noopener">Let's talk on WhatsApp</a>
+        <a class="btn btn-ghost" href="tel:+919004004538">Call +91 90040 04538</a>
+      </div>
+    </div>
+    <div class="contact rv d2">
+      <div class="logo-card"><img src="assets/logo.jpg" alt="Sampling Store"><div><b>Quick contact</b><br><span style="color:var(--muted);font-size:13px">Mon–Sat, 10am–7pm IST</span></div></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><b>Mehul Rathod</b><span>Founder, Sampling Store</span></div></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span><div><b>+91 9004004538</b><span>Call or WhatsApp</span></div></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 7l8 6 8-6"/></svg></span><div><b>Email</b><span>Write to us via the contact form on samplingstore.in</span></div></div>
+      <div class="row"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 22s7-7 7-12a7 7 0 1 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><b>Headquarter</b><span>502, 5th Floor, Swaroop Centre, OM Nagar, J B Nagar, Andheri East, Mumbai 400059</span></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Sampling Store · All rights reserved</span>
+    <span><a href="#top">Back to top</a> · <a href="#">Privacy Policy</a></span>
+  </div>
+</footer>
+
+<a class="fab" href="https://wa.link/g3trf5" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+<script src="assets/site.js?v=20261024b"></script>
+</body>
+</html>

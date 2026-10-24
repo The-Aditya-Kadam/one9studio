@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.one9studio.in/sitemap.xml

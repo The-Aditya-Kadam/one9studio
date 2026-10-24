@@ -1,5 +1,4 @@
-dist/
 .DS_Store
-node_modules/
-.env
-.env.*
+Thumbs.db
+.vercel
+node_modules
