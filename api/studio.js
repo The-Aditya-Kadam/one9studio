@@ -2,8 +2,10 @@ const crypto=require('node:crypto');
 const groups=['inquiries','talent','services','events'];
 const statuses=['New','In progress','Contacted','Closed'];
 const prefix='one9studio:v1:';
-function configured(){return Boolean(process.env.STUDIO_PASSWORD&&process.env.STUDIO_SESSION_SECRET?.length>=32&&process.env.UPSTASH_REDIS_REST_URL&&process.env.UPSTASH_REDIS_REST_TOKEN);}
-async function redis(...command){const r=await fetch(process.env.UPSTASH_REDIS_REST_URL,{method:'POST',headers:{Authorization:`Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}`,'Content-Type':'application/json'},body:JSON.stringify(command),signal:AbortSignal.timeout(8000)});const d=await r.json();if(!r.ok||d.error)throw Error('Storage unavailable');return d.result;}
+function redisUrl(){return process.env.UPSTASH_REDIS_REST_URL||process.env.KV_REST_API_URL;}
+function redisToken(){return process.env.UPSTASH_REDIS_REST_TOKEN||process.env.KV_REST_API_TOKEN;}
+function configured(){return Boolean(process.env.STUDIO_PASSWORD&&process.env.STUDIO_SESSION_SECRET?.length>=32&&redisUrl()&&redisToken());}
+async function redis(...command){const r=await fetch(redisUrl(),{method:'POST',headers:{Authorization:`Bearer ${redisToken()}`,'Content-Type':'application/json'},body:JSON.stringify(command),signal:AbortSignal.timeout(8000)});const d=await r.json();if(!r.ok||d.error)throw Error('Storage unavailable');return d.result;}
 function equal(a,b){const hash=x=>crypto.createHash('sha256').update(String(x)).digest();return crypto.timingSafeEqual(hash(a),hash(b));}
 function signed(body){return crypto.createHmac('sha256',process.env.STUDIO_SESSION_SECRET).update(body).digest('base64url');}
 function authenticated(req){const cookie=(req.headers.cookie||'').split(';').map(s=>s.trim()).find(s=>s.startsWith('studio_session='));if(!cookie)return false;const [exp,nonce,sig]=cookie.slice(15).split('.');return Number(exp)>Date.now()&&Boolean(nonce&&sig)&&equal(sig,signed(`${exp}.${nonce}`));}
