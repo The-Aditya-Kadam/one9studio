@@ -9,7 +9,9 @@ function configured(){return setupIssues().length===0;}
 async function redis(...command){const r=await fetch(redisUrl(),{method:'POST',headers:{Authorization:`Bearer ${redisToken()}`,'Content-Type':'application/json'},body:JSON.stringify(command),signal:AbortSignal.timeout(8000)});const d=await r.json();if(!r.ok||d.error)throw Error('Storage unavailable');return d.result;}
 function equal(a,b){const hash=x=>crypto.createHash('sha256').update(String(x)).digest();return crypto.timingSafeEqual(hash(a),hash(b));}
 function signed(body){return crypto.createHmac('sha256',process.env.STUDIO_SESSION_SECRET).update(body).digest('base64url');}
-function authenticated(req){const cookie=(req.headers.cookie||'').split(';').map(s=>s.trim()).find(s=>s.startsWith('studio_session='));if(!cookie)return false;const [exp,nonce,sig]=cookie.slice(15).split('.');return Number(exp)>Date.now()&&Boolean(nonce&&sig)&&equal(sig,signed(`${exp}.${nonce}`));}
+// Temporary public dashboard access requested by the owner. Set to false to restore login.
+const TEMPORARILY_DISABLE_DASHBOARD_LOGIN=true;
+function authenticated(req){if(TEMPORARILY_DISABLE_DASHBOARD_LOGIN)return true;const cookie=(req.headers.cookie||'').split(';').map(s=>s.trim()).find(s=>s.startsWith('studio_session='));if(!cookie)return false;const [exp,nonce,sig]=cookie.slice(15).split('.');return Number(exp)>Date.now()&&Boolean(nonce&&sig)&&equal(sig,signed(`${exp}.${nonce}`));}
 function cookie(value,age){return `studio_session=${value}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${age}`;}
 function text(v,max=200){return typeof v==='string'?v.trim().slice(0,max):'';}
 function validate(group,r){const name=text(r.name,150);if(!name)throw Error('Name is required');const d={name};if(group==='inquiries'){d.email=text(r.email,254);if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email))throw Error('A valid email is required');d.phone=text(r.phone,40);d.company=text(r.company,150);d.service=text(r.service,200);d.message=text(r.message,3000);d.status=statuses.includes(r.status)?r.status:'New';}
