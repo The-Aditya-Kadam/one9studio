@@ -4,7 +4,8 @@ const statuses=['New','In progress','Contacted','Closed'];
 const prefix='one9studio:v1:';
 function redisUrl(){return process.env.UPSTASH_REDIS_REST_URL||process.env.KV_REST_API_URL;}
 function redisToken(){return process.env.UPSTASH_REDIS_REST_TOKEN||process.env.KV_REST_API_TOKEN;}
-function configured(){return Boolean(process.env.STUDIO_PASSWORD&&process.env.STUDIO_SESSION_SECRET?.length>=32&&redisUrl()&&redisToken());}
+function setupIssues(){return [!process.env.STUDIO_PASSWORD?'STUDIO_PASSWORD is missing':null,!(process.env.STUDIO_SESSION_SECRET?.length>=32)?'STUDIO_SESSION_SECRET must contain at least 32 characters':null,!redisUrl()?'Redis REST URL is missing':null,!redisToken()?'Redis REST token is missing':null].filter(Boolean);}
+function configured(){return setupIssues().length===0;}
 async function redis(...command){const r=await fetch(redisUrl(),{method:'POST',headers:{Authorization:`Bearer ${redisToken()}`,'Content-Type':'application/json'},body:JSON.stringify(command),signal:AbortSignal.timeout(8000)});const d=await r.json();if(!r.ok||d.error)throw Error('Storage unavailable');return d.result;}
 function equal(a,b){const hash=x=>crypto.createHash('sha256').update(String(x)).digest();return crypto.timingSafeEqual(hash(a),hash(b));}
 function signed(body){return crypto.createHmac('sha256',process.env.STUDIO_SESSION_SECRET).update(body).digest('base64url');}
@@ -17,7 +18,7 @@ if(group==='services'){d.description=text(r.description,1500);d.status=['Publish
 if(group==='events'){d.date=text(r.date,10);if(!/^\d{4}-\d{2}-\d{2}$/.test(d.date)||Number.isNaN(Date.parse(d.date)))throw Error('Choose a valid event date');d.city=text(r.city,150);d.description=text(r.description,1500);d.status=['Published','Draft'].includes(r.status)?r.status:'Draft';}return d;}
 async function records(group){const raw=await redis('HGETALL',prefix+group);const result=[];for(let i=1;i<(raw||[]).length;i+=2){try{result.push(JSON.parse(raw[i]));}catch{}}return result.sort((a,b)=>b.createdAt.localeCompare(a.createdAt));}
 async function limited(req,kind,max){const ip=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim();const key=prefix+'limit:'+kind+':'+crypto.createHash('sha256').update(ip).digest('hex')+':'+Math.floor(Date.now()/900000);const count=await redis('INCR',key);if(count===1)await redis('EXPIRE',key,900);return count>max;}
-module.exports=async(req,res)=>{res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');const action=req.query.action||'status';if(!configured())return res.status(action==='status'?200:503).json({configured:false,authenticated:false,error:action==='status'?undefined:'Dashboard backend is not configured'});
+module.exports=async(req,res)=>{res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');const action=req.query.action||'status';if(!configured())return res.status(action==='status'?200:503).json({configured:false,authenticated:false,setupIssues:action==='status'?setupIssues():undefined,error:action==='status'?undefined:'Dashboard backend is not configured'});
 if(req.method!=='GET'&&req.method!=='POST')return res.status(405).json({error:'Method not allowed'});
 if(req.method==='POST'){const origin=req.headers.origin;if(origin&&origin!==`https://${req.headers.host}`)return res.status(403).json({error:'Origin not allowed'});if(!String(req.headers['content-type']||'').includes('application/json'))return res.status(415).json({error:'JSON required'});}
 try{if(action==='status')return res.json({configured:true,authenticated:authenticated(req)});
