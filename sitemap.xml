@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://www.one9studio.in/</loc></url><url><loc>https://www.one9studio.in/dashboard</loc></url></urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.one9studio.in/</loc></url>
+  <url><loc>https://www.one9studio.in/brand-management</loc></url>
+  <url><loc>https://www.one9studio.in/social-media-management</loc></url>
+  <url><loc>https://www.one9studio.in/influencer-management</loc></url>
+  <url><loc>https://www.one9studio.in/talent-management</loc></url>
+  <url><loc>https://www.one9studio.in/artist-management</loc></url>
+  <url><loc>https://www.one9studio.in/brand-collaborations</loc></url>
+  <url><loc>https://www.one9studio.in/event-show-management</loc></url>
+  <url><loc>https://www.one9studio.in/suppliers</loc></url>
+  <url><loc>https://www.one9studio.in/diwali-edit</loc></url>
+</urlset>

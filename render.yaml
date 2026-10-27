@@ -1,12 +1,49 @@
+# Static copy of the site only. Render static hosting cannot run /api/studio.js,
+# so on Render the dashboard runs in demo mode and inquiries become copy/download drafts.
+# Vercel (vercel.json) is the main host and runs the full site with the backend.
 services:
   - type: web
     runtime: static
     name: one9studio
     repo: https://github.com/agencywork187-commits/one9studio
     branch: main
-    buildCommand: mkdir -p dist && cp index.html styles.css app.js dist/ && cp -R assets dist/
+    buildCommand: mkdir -p dist && cp *.html robots.txt sitemap.xml dist/ && cp -R assets dist/
     staticPublishPath: dist
     autoDeployTrigger: commit
+    routes:
+      - type: rewrite
+        source: /brand-management
+        destination: /brand-management.html
+      - type: rewrite
+        source: /social-media-management
+        destination: /social-media-management.html
+      - type: rewrite
+        source: /influencer-management
+        destination: /influencer-management.html
+      - type: rewrite
+        source: /talent-management
+        destination: /talent-management.html
+      - type: rewrite
+        source: /artist-management
+        destination: /artist-management.html
+      - type: rewrite
+        source: /brand-collaborations
+        destination: /brand-collaborations.html
+      - type: rewrite
+        source: /event-show-management
+        destination: /event-show-management.html
+      - type: rewrite
+        source: /suppliers
+        destination: /suppliers.html
+      - type: rewrite
+        source: /diwali-edit
+        destination: /diwali-edit.html
+      - type: rewrite
+        source: /dashboard
+        destination: /dashboard.html
+      - type: rewrite
+        source: /coming-soon
+        destination: /coming-soon.html
     headers:
       - path: /*
         name: X-Content-Type-Options

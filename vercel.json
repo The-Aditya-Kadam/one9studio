@@ -18,6 +18,8 @@
   ],
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/landing", "destination": "/", "permanent": true },
+    { "source": "/landing.html", "destination": "/", "permanent": true },
     { "source": "/suppliers.html", "destination": "/suppliers", "permanent": true },
     { "source": "/diwali-edit.html", "destination": "/diwali-edit", "permanent": true }
   ]

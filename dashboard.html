@@ -1,17 +1,142 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>one9studio — Studio Control</title><meta name="robots" content="noindex,nofollow"><link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="assets/dashboard.css?v=20261026c"><script src="assets/dashboard.js?v=20261026d" defer></script></head><body>
-<a class="skip" href="#workspace">Skip to workspace</a>
-<aside id="sidebar"><a class="logo" href="/">one9<span>studio</span><i></i></a><div class="workspace-label">STUDIO WORKSPACE</div><nav aria-label="Dashboard">
-<button class="active" data-page="overview"><i>◫</i>Overview</button><button data-page="inquiries"><i>↗</i>Inquiry inbox<span id="inbox-count" class="nav-count">0</span></button><button data-page="talent"><i>✧</i>Talent roster</button><button data-page="services"><i>◈</i>Services</button><button data-page="events"><i>▦</i>Events</button><div class="workspace-label nav-label">PUBLISH</div><button data-page="content"><i>≡</i>Website content</button></nav>
-<div class="sidebar-note"><span class="note-icon">✦</span><b>One studio.<br>Every possibility.</b><p>Great things start with<br>a conversation.</p><a href="/" target="_blank" rel="noopener">Visit your website ↗</a></div><div class="sidebar-bottom"><div class="studio-avatar">O9</div><div><b>one9studio</b><small>Studio management</small></div></div></aside>
-<button id="menu-shade" aria-label="Close navigation" tabindex="-1"></button>
-<div class="app-shell"><header><div class="header-left"><button id="menu" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false">☰</button><span class="breadcrumb">Workspace <span>/</span> <b id="crumb">OVERVIEW</b></span></div><div class="header-right"><span class="role"><i id="connection-dot"></i><span id="connection">Checking connection</span></span><a class="website-link" href="/" target="_blank" rel="noopener">View website ↗</a><button id="logout" hidden>Sign out</button><div class="studio-avatar">O9</div></div></header>
-<main id="workspace" tabindex="-1"><div class="workspace"><div class="eyebrow">YOUR STUDIO, AT A GLANCE <span id="today"></span></div><div class="title-row"><div><h1 id="page-title">Studio overview</h1><p class="subtitle" id="subtitle">A little clarity. A lot of possibility.</p></div><div class="title-actions"><button id="export-csv">↓ Export CSV</button><button class="gold" id="add-record">+ Add inquiry</button></div></div>
-<div id="setup" hidden class="notice"><b>Backend setup required</b><p>The dashboard design is ready. Connect the server environment variables to enable team login, saved records and website inquiries. No demo records are presented as real activity.</p><a href="https://vercel.com/one9-studio/one9studio/settings/environment-variables" target="_blank" rel="noopener">Open Vercel environment settings ↗</a></div>
-<div id="login-panel" hidden class="login-panel"><div><p class="overline">PRIVATE WORKSPACE</p><h2>Welcome to<br>the inside.</h2><p>Sign in to manage the studio. Your public website stays at the main domain.</p></div><form id="login-form"><label>Team password<input name="password" type="password" required autocomplete="current-password" maxlength="200"></label><button class="gold">Sign in ↗</button><p id="login-error" role="status"></p></form></div>
-<section id="overview"><div class="cards" id="stats"></div><div class="insights-grid"><section class="panel pipeline-panel"><div class="panel-heading"><div><p class="overline">THE BIG PICTURE</p><h3>Inquiry pipeline</h3></div><span class="tiny-label">ALL TIME</span></div><div class="pipeline-content"><div class="donut" id="pipeline-donut"><div><strong id="pipeline-total">0</strong><span>inquiries</span></div></div><div id="pipeline-legend"></div></div></section><section class="studio-banner"><div><span class="badge">BUILT FOR YOUR NEXT BIG MOMENT</span><h2>Good work starts<br>with a connection.</h2><p>Turn conversations into opportunities.<br>Your next chapter is waiting in the inbox.</p><button data-open-page="inquiries">Open inquiry inbox <span>↗</span></button></div><div class="sculpture" aria-hidden="true"><div class="orb"></div><div class="ring"></div><span>✦</span></div></section></div><div class="bottom-grid"><section class="panel"><div class="panel-heading"><h3>Recent inquiries</h3><button class="text-button" data-open-page="inquiries">View all ↗</button></div><div id="recent-inquiries"></div></section><section class="panel"><div class="panel-heading"><h3>On the horizon</h3><span class="tiny-label">EVENTS</span></div><div id="upcoming-events"></div><button class="text-button" data-open-page="events">Manage events ↗</button></section></div></section>
-<section id="records" hidden><div class="toolbar"><label class="search-label">Search records<input id="search" type="search" placeholder="Search names, services or details…"></label><select id="status-filter" aria-label="Filter inquiry status"><option value="">All statuses</option><option>New</option><option>In progress</option><option>Contacted</option><option>Closed</option></select><span id="record-count"></span></div><div class="panel table-panel"><table><thead id="table-head"></thead><tbody id="table-body"></tbody></table><div class="empty" id="empty-records" hidden></div></div></section>
-<section id="content-panel" hidden class="panel"><p class="overline">PUBLIC WEBSITE</p><h2>Website content</h2><p class="subtitle">Publish the hero message and contact details shown on the main website.</p><form id="content-form"><label>Hero headline<input name="headline" maxlength="150" required></label><label>Introduction<textarea name="intro" rows="3" maxlength="1500" required></textarea></label><div class="form-grid"><label>Contact email<input name="email" type="email" maxlength="254"></label><label>Contact phone<input name="phone" type="tel" maxlength="40"></label></div><button class="gold" type="submit">Publish content ↗</button></form></section>
-<p id="feedback" role="status"></p><footer>one9studio © <span id="year"></span><span>Studio administration</span></footer></div></main></div>
-<dialog id="editor" aria-labelledby="editor-title"><form id="record-form"><div class="panel-heading"><h2 id="editor-title">Add record</h2><button class="close" type="button" aria-label="Close editor">×</button></div><div id="editor-fields"></div><div class="dialog-actions"><button type="button" id="delete-record" class="del" hidden>Delete record</button><button class="gold" type="submit">Save record ↗</button></div><p id="editor-error" role="status"></p></form></dialog>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>one9studio — Studio Dashboard</title>
+<link rel="icon" href="/assets/one9/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap">
+<link rel="stylesheet" href="/assets/one9/dashboard.css?v=3">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="/dashboard"><img src="/assets/one9/logo.svg" alt="" width="34" height="34"><span>one9<b>studio</b></span></a>
+    <nav aria-label="Dashboard">
+      <p class="nav-label">Workspace</p>
+      <a href="#overview" data-page="overview"><span class="ni">◎</span>Overview</a>
+      <a href="#inquiries" data-page="inquiries"><span class="ni">✉</span>Inquiries<em id="badge-inquiries"></em></a>
+      <p class="nav-label">Services</p>
+      <a href="#brands" data-page="brands"><span class="ni">◆</span>Brand Management</a>
+      <a href="#social" data-page="social"><span class="ni">◉</span>Social Media</a>
+      <a href="#influencers" data-page="influencers"><span class="ni">★</span>Influencers</a>
+      <a href="#talent" data-page="talent"><span class="ni">✦</span>Talent</a>
+      <a href="#artists" data-page="artists"><span class="ni">♪</span>Artists</a>
+      <a href="#campaigns" data-page="campaigns"><span class="ni">⇄</span>Brand Collaborations</a>
+      <a href="#events" data-page="events"><span class="ni">▦</span>Events &amp; Shows</a>
+      <p class="nav-label">Website</p>
+      <a href="#website" data-page="website"><span class="ni">⌂</span>Website content</a>
+      <a href="/" target="_blank" rel="noopener"><span class="ni">↗</span>View website</a>
+    </nav>
+    <div class="side-foot"><span class="dot" id="connection-dot"></span><span id="connection">Connecting…</span></div>
+  </aside>
 
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+      <div>
+        <h1 id="page-title">Overview</h1>
+        <p id="page-sub" class="sub">Your studio at a glance.</p>
+      </div>
+      <div class="top-actions">
+        <button class="btn btn-primary" id="add-btn" type="button">+ Add</button>
+        <button class="btn btn-ghost" id="logout" type="button" hidden>Sign out</button>
+      </div>
+    </header>
+
+    <div class="banner" id="demo-banner" hidden>
+      <strong>Demo mode.</strong> You are seeing sample data. Changes stay in this browser tab and are not saved. Connect the database (see ADMIN_SETUP.md) to manage real records.
+    </div>
+    <div class="banner warn" id="public-banner" hidden>
+      <strong>Login is switched off.</strong> Anyone with the /dashboard link can view and edit these records.
+    </div>
+
+    <main id="content">
+      <!-- Overview -->
+      <section data-view="overview">
+        <div class="kpis" id="kpis"></div>
+        <div class="grid-2">
+          <div class="panel"><div class="panel-head"><h2>Inquiries by service</h2><a href="#inquiries">View all →</a></div><div id="by-service" class="bars"></div></div>
+          <div class="panel"><div class="panel-head"><h2>Inquiry pipeline</h2></div><div id="pipeline"></div></div>
+        </div>
+        <div class="grid-3">
+          <div class="panel span-2"><div class="panel-head"><h2>Recent inquiries</h2><a href="#inquiries">Open inbox →</a></div><div id="recent"></div></div>
+          <div class="panel"><div class="panel-head"><h2>Upcoming events</h2><a href="#events">All →</a></div><div id="upcoming"></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="panel"><div class="panel-head"><h2>Live collaborations</h2><a href="#campaigns">All →</a></div><div id="live"></div></div>
+          <div class="panel"><div class="panel-head"><h2>Roster</h2><a href="#influencers">Manage →</a></div><div id="roster-split"></div></div>
+        </div>
+      </section>
+
+      <!-- Record lists -->
+      <section data-view="records" hidden>
+        <div class="mini-kpis" id="mini-kpis"></div>
+        <div class="panel">
+          <div class="toolbar">
+            <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search…" aria-label="Search records"></label>
+            <select id="status-filter" aria-label="Filter by status"></select>
+            <span class="count" id="record-count"></span>
+          </div>
+          <div class="table-wrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+          <p class="empty" id="empty" hidden></p>
+        </div>
+      </section>
+
+      <!-- Website content -->
+      <section data-view="website" hidden>
+        <div class="grid-2">
+          <form class="panel form" id="content-form">
+            <div class="panel-head"><h2>Home page &amp; contact details</h2></div>
+            <label>Headline<input name="headline" maxlength="150" required></label>
+            <label>Introduction<textarea name="intro" rows="4" maxlength="1500" required></textarea></label>
+            <label>Contact email<input name="email" type="email" maxlength="254"></label>
+            <label>Contact phone<input name="phone" maxlength="40"></label>
+            <label>WhatsApp number<input name="whatsapp" inputmode="numeric" maxlength="20" placeholder="919876543210"><small class="hint">Country code + number, digits only. Every WhatsApp button on the website uses this number.</small></label>
+            <div class="form-row"><button class="btn btn-primary" type="submit">Publish to website</button><span class="form-msg" id="content-msg" role="status"></span></div>
+          </form>
+          <div class="panel">
+            <div class="panel-head"><h2>What this changes</h2></div>
+            <ul class="help">
+              <li>The headline and introduction at the top of the home page.</li>
+              <li>The email and phone shown in every page’s contact section.</li>
+              <li>The WhatsApp number behind every “Chat on WhatsApp” button and the floating chat button.</li>
+              <li>Events marked <b>Published</b> under Events &amp; Shows replace the demo events on the home page.</li>
+              <li>Visitors contact you on WhatsApp. Log serious leads in <a href="#inquiries">Inquiries</a> to track them — use the WhatsApp button there to reply.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<dialog id="editor" class="editor" aria-labelledby="editor-title">
+  <form id="editor-form" method="dialog">
+    <div class="editor-head"><h2 id="editor-title">Edit</h2><button class="icon-btn" type="button" id="editor-close" aria-label="Close">✕</button></div>
+    <div class="editor-fields" id="editor-fields"></div>
+    <p class="form-msg err" id="editor-error" role="alert"></p>
+    <div class="editor-foot">
+      <button class="btn btn-danger" type="button" id="delete-btn">Delete</button>
+      <span></span>
+      <button class="btn btn-ghost" type="button" id="cancel-btn">Cancel</button>
+      <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="login" class="editor" aria-labelledby="login-title">
+  <form id="login-form">
+    <div class="editor-head"><h2 id="login-title">Team sign in</h2></div>
+    <label class="field">Password<input type="password" name="password" required autocomplete="current-password"></label>
+    <p class="form-msg err" id="login-error" role="alert"></p>
+    <div class="editor-foot"><span></span><button class="btn btn-primary" type="submit">Sign in</button></div>
+  </form>
+</dialog>
+
+<script src="/assets/one9/dashboard.js?v=3" defer></script>
+</body>
+</html>

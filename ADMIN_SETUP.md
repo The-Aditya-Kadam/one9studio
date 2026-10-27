@@ -1,28 +1,46 @@
 # one9studio dashboard setup
 
-The main website stays at `/`. `/dashboard` is a separate 3D administration interface inspired by the supplied SKYBUILD reference, using the one9studio palette. It manages inquiries, talent records, service descriptions, events and public hero/contact content. It uses no Claude-only runtime.
+The dashboard at `/dashboard` manages inquiries, brands, social media accounts, influencers, talent, artists, brand collaborations, events and the home page content. Data is stored in Upstash Redis through the Vercel function `api/studio.js`.
 
-## Required configuration
+## 1. Connect the database (required)
 
-Create an Upstash Redis database and set these variables in the existing Vercel project's Production environment:
+Create an Upstash Redis database (Vercel Marketplace → Upstash, or upstash.com) and add these to the Vercel project's **Production** environment variables:
 
-- `UPSTASH_REDIS_REST_URL`: HTTPS REST endpoint from that database.
-- `UPSTASH_REDIS_REST_TOKEN`: server REST token from that database.
-- `STUDIO_PASSWORD`: a long unique shared team password.
-- `STUDIO_SESSION_SECRET`: at least 32 random characters (generate locally, e.g. `openssl rand -hex 32`).
+- `UPSTASH_REDIS_REST_URL` — the database's HTTPS REST endpoint
+- `UPSTASH_REDIS_REST_TOKEN` — the database's REST token
 
-Enter these directly in Vercel, never in GitHub or chat. Redeploy after setting them. No payment provider or payment collection is included.
+(The Vercel KV names `KV_REST_API_URL` / `KV_REST_API_TOKEN` also work.)
 
-Until all variables are present, the dashboard shows an explicit setup notice, no private records are returned, writes are rejected, and website inquiries keep their previous local draft behavior. There is no default password, fake login or invented activity.
+Enter them in Vercel only — never in GitHub or chat. Redeploy afterwards.
 
-## Behavior
+Until these are set, the dashboard runs in **demo mode** with sample data. The website itself works without the database — all contact goes through WhatsApp.
 
-Team login is verified server-side; an eight-hour signed session is stored in a Secure, HttpOnly, SameSite=Strict cookie. Login and public-inquiry requests have database-backed limits per IP/time window. Records are stored in Redis hashes. Deleted records are copied to a server-side archive before removal; this is not a permanent-delete tool. Writes require same-origin JSON and an authenticated session, except public inquiry submission. Records never use localStorage as a substitute for server persistence.
+## 2. Turn the login on (recommended before launch)
 
-After configuration, public forms submit to `/api/studio?action=inquire`; the dashboard inbox reads those records. Site content and published events are fetched from `/api/studio?action=content`. Service description updates apply to the six existing service cards by matching their names; creating an unrelated service record does not invent a new public card or inquiry form. Talent records are internal. Project/payment tracking from the reference is not included.
+The login is **currently off** (`TEMPORARILY_DISABLE_DASHBOARD_LOGIN = true` in `api/studio.js`). While it is off and the database is connected, anyone with the `/dashboard` link can read and edit every record.
 
-One shared team password is supported in this first version. Individual accounts, per-user roles, password recovery, attachments and payment accounting are not implemented. Redis contains contact data; limit access to the Vercel and Redis project owners.
+To require the team password:
 
-## Verification
+1. Add `STUDIO_PASSWORD` (a long, unique shared password) and `STUDIO_SESSION_SECRET` (at least 32 random characters, e.g. `openssl rand -hex 32`) to Vercel.
+2. Set `TEMPORARILY_DISABLE_DASHBOARD_LOGIN = false` in `api/studio.js`.
+3. Commit and redeploy.
 
-Syntax and mocked API tests cover configuration gating, login, cookie authentication, private record reads and public inquiry persistence. Production login/storage verification requires the variables above. No credentials are included in the repository.
+Sign-in then creates an 8-hour Secure, HttpOnly, SameSite=Strict session cookie. Login attempts are rate-limited per IP.
+
+## What each section stores
+
+| Dashboard section | Record type | Key fields |
+|---|---|---|
+| Inquiries | `inquiries` | leads you log from WhatsApp: name, phone, email, company, service, message, status (New → In progress → Contacted → Won / Closed) |
+| Brand Management | `brands` | brand, industry, contact, retainer, status |
+| Social Media | `social` | handle, platform, client, followers, posts this month, status |
+| Influencers / Talent / Artists | `talent` | name, category, niche, followers, city, rate, status |
+| Brand Collaborations | `campaigns` | name, brand, talent, budget, launch date, status |
+| Events & Shows | `events` | name, type, date, city, venue, status (Published events show on the website) |
+| Website content | `content` | home page headline, introduction, contact email, phone and WhatsApp number |
+
+Deleted records are copied to an archive in Redis before removal. Public visitors can only read the website content and published events.
+
+## Not included yet
+
+Individual team accounts and roles, password recovery, file uploads, payments and invoicing.
