@@ -228,7 +228,7 @@ $('#delete-btn').addEventListener('click', async () => {
 
 /* ---------- Website content ---------- */
 function renderWebsite() {
-  const c = data.content || { headline: 'Influence has value. We turn it into commercial opportunity.', intro: 'one9studio connects brands, creators and artists — managing reputations, careers, collaborations and live shows that create measurable returns.', email: 'hello@one9studio.in', phone: '+91 98765 43210', whatsapp: '919876543210' };
+  const c = data.content || { headline: 'Influence has value. We turn it into commercial opportunity.', intro: 'one9studio connects brands, creators and artists — managing reputations, careers, collaborations and live shows that create measurable returns.', email: 'hello@one9studio.in', phone: '+91 83558 74139', whatsapp: '918355874139' };
   const f = $('#content-form');
   for (const k of ['headline', 'intro', 'email', 'phone', 'whatsapp']) f.elements[k].value = c[k] || '';
   $('#content-msg').textContent = '';

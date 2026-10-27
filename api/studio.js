@@ -146,7 +146,7 @@ module.exports = async (req, res) => {
     if (action === 'publish' && req.method === 'POST') {
       const b = req.body || {};
       const d = { headline: text(b.headline, 150), intro: text(b.intro, 1500), email: text(b.email, 254), phone: text(b.phone, 40), whatsapp: text(b.whatsapp, 20).replace(/[^0-9]/g, '') };
-      if (d.whatsapp && d.whatsapp.length < 8) throw Error('Enter the WhatsApp number with country code, e.g. 919876543210');
+      if (d.whatsapp && d.whatsapp.length < 8) throw Error('Enter the WhatsApp number with country code, e.g. 918355874139');
       if (!d.headline || !d.intro) throw Error('Headline and introduction are required');
       if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) throw Error('Invalid contact email');
       await redis('SET', prefix + 'content', JSON.stringify(d));

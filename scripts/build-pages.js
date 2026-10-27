@@ -18,9 +18,9 @@ const SITE = {
   domain: 'https://www.one9studio.in',
   tagline: 'Influence has value and we are turning it into the commercial opportunity',
   email: 'hello@one9studio.in',
-  phone: '+91 98765 43210',
+  phone: '+91 83558 74139',
   // WhatsApp number: country code + number, digits only (no +, spaces or dashes)
-  whatsapp: '919876543210',
+  whatsapp: '918355874139',
   city: 'Mumbai, India',
 };
 

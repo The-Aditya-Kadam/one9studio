@@ -28,11 +28,11 @@ The number is set in two places:
 - `SITE.whatsapp` in `scripts/build-pages.js` — the default, built into the pages (then run the build).
 - **Website content → WhatsApp number** in the dashboard — overrides the default on the live site once the database is connected, no rebuild needed.
 
-The current number `919876543210` is a placeholder.
+The WhatsApp number is `918355874139` (+91 83558 74139).
 
 ## Demo content
 
-All names, clients, numbers, case studies, testimonials, events, the contact email/phone and the WhatsApp number are **demo content**. Photos are free Unsplash images loaded from `images.unsplash.com`. Replace them with real ones before launch.
+All names, clients, numbers, case studies, testimonials, events, and the contact email are **demo content**. Photos are free Unsplash images loaded from `images.unsplash.com`. Replace them with real ones before launch.
 
 ## Editing the pages
 
