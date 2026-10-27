@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap">
-<link rel="stylesheet" href="/assets/one9/dashboard.css?v=3">
+<link rel="stylesheet" href="/assets/one9/dashboard.css?v=5">
+<link rel="stylesheet" href="/assets/one9/site-editor.css?v=1">
 </head>
 <body>
 <div class="app">
@@ -28,7 +29,7 @@
       <a href="#campaigns" data-page="campaigns"><span class="ni">⇄</span>Brand Collaborations</a>
       <a href="#events" data-page="events"><span class="ni">▦</span>Events &amp; Shows</a>
       <p class="nav-label">Website</p>
-      <a href="#website" data-page="website"><span class="ni">⌂</span>Website content</a>
+      <a href="#website" data-page="website"><span class="ni">⌂</span>Website</a>
       <a href="/" target="_blank" rel="noopener"><span class="ni">↗</span>View website</a>
     </nav>
     <div class="side-foot"><span class="dot" id="connection-dot"></span><span id="connection">Connecting…</span></div>
@@ -86,28 +87,22 @@
         </div>
       </section>
 
-      <!-- Website content -->
+      <!-- Website editor -->
       <section data-view="website" hidden>
-        <div class="grid-2">
-          <form class="panel form" id="content-form">
-            <div class="panel-head"><h2>Home page &amp; contact details</h2></div>
-            <label>Headline<input name="headline" maxlength="150" required></label>
-            <label>Introduction<textarea name="intro" rows="4" maxlength="1500" required></textarea></label>
-            <label>Contact email<input name="email" type="email" maxlength="254"></label>
-            <label>Contact phone<input name="phone" maxlength="40"></label>
-            <label>WhatsApp number<input name="whatsapp" inputmode="numeric" maxlength="20" placeholder="918355874139"><small class="hint">Country code + number, digits only. Every WhatsApp button on the website uses this number.</small></label>
-            <div class="form-row"><button class="btn btn-primary" type="submit">Publish to website</button><span class="form-msg" id="content-msg" role="status"></span></div>
-          </form>
-          <div class="panel">
-            <div class="panel-head"><h2>What this changes</h2></div>
-            <ul class="help">
-              <li>The headline and introduction at the top of the home page.</li>
-              <li>The email and phone shown in every page’s contact section.</li>
-              <li>The WhatsApp number behind every “Chat on WhatsApp” button and the floating chat button.</li>
-              <li>Events marked <b>Published</b> under Events &amp; Shows replace the demo events on the home page.</li>
-              <li>Visitors contact you on WhatsApp. Log serious leads in <a href="#inquiries">Inquiries</a> to track them — use the WhatsApp button there to reply.</li>
-            </ul>
-          </div>
+        <div class="se">
+          <aside class="se-side panel">
+            <button type="button" class="se-nav" data-se-open="settings">⚙ Site settings</button>
+            <p class="se-label">Pages</p>
+            <div id="se-pages"></div>
+            <button type="button" class="btn btn-ghost se-wide" id="se-add-page">+ New page</button>
+            <button type="button" class="btn btn-ghost se-wide" id="se-history">↺ Version history</button>
+          </aside>
+          <div class="se-main" id="se-main"><p class="empty">Loading website…</p></div>
+        </div>
+        <div class="se-bar" id="se-bar" hidden>
+          <span id="se-bar-text">You have unpublished changes.</span>
+          <button type="button" class="btn btn-ghost" id="se-discard">Discard</button>
+          <button type="button" class="btn btn-primary" id="se-publish">Publish to website</button>
         </div>
       </section>
     </main>
@@ -137,6 +132,16 @@
   </form>
 </dialog>
 
-<script src="/assets/one9/dashboard.js?v=4" defer></script>
+<dialog id="se-dialog" class="editor se-dialog" aria-labelledby="se-dialog-title">
+  <form id="se-dialog-form" method="dialog">
+    <div class="editor-head"><h2 id="se-dialog-title">Edit</h2><button class="icon-btn" type="button" data-se-close aria-label="Close">✕</button></div>
+    <div id="se-dialog-body"></div>
+    <p class="form-msg err" id="se-dialog-error" role="alert"></p>
+    <div class="editor-foot" id="se-dialog-foot"></div>
+  </form>
+</dialog>
+
+<script src="/assets/one9/dashboard.js?v=5" defer></script>
+<script src="/assets/one9/site-editor.js?v=1" defer></script>
 </body>
 </html>

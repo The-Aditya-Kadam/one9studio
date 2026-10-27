@@ -1,6 +1,6 @@
 # one9studio dashboard setup
 
-The dashboard at `/dashboard` manages inquiries, brands, social media accounts, influencers, talent, artists, brand collaborations, events and the home page content. Data is stored in Upstash Redis through the Vercel function `api/studio.js`.
+The dashboard at `/dashboard` manages inquiries, brands, social media accounts, influencers, talent, artists, brand collaborations, events and **the whole website** (Website → pages, sections, images, settings). Data is stored in Upstash Redis through the Vercel function `api/studio.js`; uploaded images go to the Vercel Blob store `one9studio-images` (`BLOB_READ_WRITE_TOKEN`, already connected).
 
 ## 1. Connect the database (required)
 
@@ -37,9 +37,9 @@ Sign-in then creates an 8-hour Secure, HttpOnly, SameSite=Strict session cookie.
 | Influencers / Talent / Artists | `talent` | name, category, niche, followers, city, rate, status |
 | Brand Collaborations | `campaigns` | name, brand, talent, budget, launch date, status |
 | Events & Shows | `events` | name, type, date, city, venue, status (Published events show on the website) |
-| Website content | `content` | home page headline, introduction, contact email, phone and WhatsApp number |
+| Website | `site` (+ `site-history`, last 20 published versions) | all pages, sections, images, menus, contact details and WhatsApp number |
 
-Deleted records are copied to an archive in Redis before removal. Public visitors can only read the website content and published events.
+Deleted records are copied to an archive in Redis before removal. Public visitors only see the published website pages.
 
 ## Not included yet
 

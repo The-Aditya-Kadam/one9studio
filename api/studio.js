@@ -1,8 +1,14 @@
 /*
   one9studio backend — Vercel serverless function at /api/studio
-  Storage: Upstash Redis (REST). Setup: see ADMIN_SETUP.md.
+  Storage: Upstash Redis (REST) + Vercel Blob for images (see lib/store.js). Setup: see ADMIN_SETUP.md.
 */
 const crypto = require('node:crypto');
+const store = require('../lib/store');
+const { loadSite, SITE_KEY } = require('../lib/render');
+const { cleanSite } = require('../lib/site-validate');
+const { schema: sectionSchema } = require('../lib/sections');
+const HISTORY_KEY = 'one9studio:v1:site-history';
+const MAX_HISTORY = 20;
 
 // Dashboard login switch.
 // true  = anyone who opens /dashboard can see and change all records (current setting, requested by the owner).
@@ -10,7 +16,6 @@ const crypto = require('node:crypto');
 const TEMPORARILY_DISABLE_DASHBOARD_LOGIN = true;
 
 const prefix = 'one9studio:v1:';
-const SERVICES = ['Brand Management', 'Social Media Management', 'Influencer Management', 'Talent Management', 'Artist Management', 'Brand Collaborations', 'Event & Show Management', 'Not sure yet'];
 
 // Record types the dashboard manages. Each field: [name, maxLength, kind]
 // kind: 'text' | 'email' | 'date' | 'digits' | array of allowed values (first = default)
@@ -24,24 +29,16 @@ const SCHEMAS = {
 };
 const groups = Object.keys(SCHEMAS);
 
-function redisUrl() { return process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL; }
-function redisToken() { return process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN; }
 function setupIssues() {
   return [
     !TEMPORARILY_DISABLE_DASHBOARD_LOGIN && !process.env.STUDIO_PASSWORD ? 'STUDIO_PASSWORD is missing' : null,
     !TEMPORARILY_DISABLE_DASHBOARD_LOGIN && !(process.env.STUDIO_SESSION_SECRET?.length >= 32) ? 'STUDIO_SESSION_SECRET must contain at least 32 characters' : null,
-    !redisUrl() ? 'Redis REST URL is missing' : null,
-    !redisToken() ? 'Redis REST token is missing' : null,
+    !store.configured() ? 'Redis database is not connected (UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN)' : null,
   ].filter(Boolean);
 }
 function configured() { return setupIssues().length === 0; }
 
-async function redis(...command) {
-  const r = await fetch(redisUrl(), { method: 'POST', headers: { Authorization: `Bearer ${redisToken()}`, 'Content-Type': 'application/json' }, body: JSON.stringify(command), signal: AbortSignal.timeout(8000) });
-  const d = await r.json();
-  if (!r.ok || d.error) throw Error('Storage unavailable');
-  return d.result;
-}
+const redis = (...command) => store.command(...command);
 
 function equal(a, b) { const hash = x => crypto.createHash('sha256').update(String(x)).digest(); return crypto.timingSafeEqual(hash(a), hash(b)); }
 function signed(body) { return crypto.createHmac('sha256', process.env.STUDIO_SESSION_SECRET).update(body).digest('base64url'); }
@@ -85,6 +82,15 @@ async function limited(req, kind, max) {
   return count > max;
 }
 
+async function addHistory(previousJson) {
+  await redis('HSET', HISTORY_KEY, new Date().toISOString() + '_' + crypto.randomBytes(3).toString('hex'), previousJson);
+  const raw = await redis('HGETALL', HISTORY_KEY);
+  const keys = [];
+  for (let i = 0; i < (raw || []).length; i += 2) keys.push(raw[i]);
+  keys.sort();
+  for (const k of keys.slice(0, Math.max(0, keys.length - MAX_HISTORY))) await redis('HDEL', HISTORY_KEY, k);
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -100,12 +106,12 @@ module.exports = async (req, res) => {
   if (req.method !== 'GET' && req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   if (req.method === 'POST') {
     const origin = req.headers.origin;
-    if (origin && origin !== `https://${req.headers.host}`) return res.status(403).json({ error: 'Origin not allowed' });
+    if (origin && origin !== `https://${req.headers.host}` && !(store.DEV && origin === `http://${req.headers.host}`)) return res.status(403).json({ error: 'Origin not allowed' });
     if (!String(req.headers['content-type'] || '').includes('application/json')) return res.status(415).json({ error: 'JSON required' });
   }
 
   try {
-    if (action === 'status') return res.json({ configured: true, authenticated: authenticated(req), loginDisabled: TEMPORARILY_DISABLE_DASHBOARD_LOGIN });
+    if (action === 'status') return res.json({ configured: true, authenticated: authenticated(req), loginDisabled: TEMPORARILY_DISABLE_DASHBOARD_LOGIN, uploads: store.uploadsConfigured() });
 
     if (action === 'login' && req.method === 'POST') {
       if (TEMPORARILY_DISABLE_DASHBOARD_LOGIN) return res.json({ ok: true });
@@ -117,40 +123,55 @@ module.exports = async (req, res) => {
     }
     if (action === 'logout' && req.method === 'POST') { res.setHeader('Set-Cookie', cookie('', 0)); return res.json({ ok: true }); }
 
-    // Public: website content and published events
-    if (action === 'content' && req.method === 'GET') {
-      const raw = await redis('GET', prefix + 'content');
-      const events = (await records('events')).filter(x => x.status === 'Published').map(({ name, type, date, city, venue, description }) => ({ name, type, date, city, venue, description }));
-      return res.json({ content: raw ? JSON.parse(raw) : null, events });
-    }
-
-    // Public: website inquiry form
-    if (action === 'inquire' && req.method === 'POST') {
-      if (await limited(req, 'inquire', 10)) return res.status(429).json({ error: 'Too many inquiries. Please try again later' });
-      const d = validate('inquiries', req.body || {});
-      if (!SERVICES.includes(d.service)) d.service = 'Not sure yet';
-      d.status = 'New'; d.id = crypto.randomUUID(); d.createdAt = new Date().toISOString(); d.updatedAt = d.createdAt;
-      await redis('HSET', prefix + 'inquiries', d.id, JSON.stringify(d));
-      return res.status(201).json({ ok: true });
-    }
-
     if (!authenticated(req)) return res.status(401).json({ error: 'Please sign in' });
 
     if (action === 'read' && req.method === 'GET') {
       const data = {};
       for (const g of groups) data[g] = await records(g);
-      const c = await redis('GET', prefix + 'content');
-      data.content = c ? JSON.parse(c) : null;
       return res.json(data);
     }
-    if (action === 'publish' && req.method === 'POST') {
-      const b = req.body || {};
-      const d = { headline: text(b.headline, 150), intro: text(b.intro, 1500), email: text(b.email, 254), phone: text(b.phone, 40), whatsapp: text(b.whatsapp, 20).replace(/[^0-9]/g, '') };
-      if (d.whatsapp && d.whatsapp.length < 8) throw Error('Enter the WhatsApp number with country code, e.g. 918355874139');
-      if (!d.headline || !d.intro) throw Error('Headline and introduction are required');
-      if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) throw Error('Invalid contact email');
-      await redis('SET', prefix + 'content', JSON.stringify(d));
-      return res.json({ ok: true });
+
+    /* ---------- Website editor ---------- */
+    if (action === 'site' && req.method === 'GET') {
+      const { site, saved } = await loadSite();
+      const rev = Number(await redis('GET', SITE_KEY + ':rev')) || 0;
+      return res.json({ site, saved, rev, schema: sectionSchema(), uploads: store.uploadsConfigured() });
+    }
+    if (action === 'site-save' && req.method === 'POST') {
+      const { site, rev } = req.body || {};
+      const current = Number(await redis('GET', SITE_KEY + ':rev')) || 0;
+      if (Number(rev) !== current) return res.status(409).json({ error: 'The website was changed in another window. Reload the dashboard to get the latest version.' });
+      const clean = cleanSite(site);
+      const previous = await redis('GET', SITE_KEY);
+      if (previous) await addHistory(previous);
+      await redis('SET', SITE_KEY, JSON.stringify(clean));
+      const next = await redis('INCR', SITE_KEY + ':rev');
+      return res.json({ ok: true, site: clean, rev: next });
+    }
+    if (action === 'site-history' && req.method === 'GET') {
+      const raw = await redis('HGETALL', HISTORY_KEY);
+      const list = [];
+      for (let i = 0; i < (raw || []).length; i += 2) { try { const v = JSON.parse(raw[i + 1]); list.push({ id: raw[i], savedAt: raw[i].split('_')[0], pages: v.pages?.length || 0 }); } catch { /* skip */ } }
+      return res.json({ versions: list.sort((a, b) => b.id.localeCompare(a.id)) });
+    }
+    if (action === 'site-restore' && req.method === 'POST') {
+      const id = String(req.body?.id || '');
+      const old = id ? await redis('HGET', HISTORY_KEY, id) : null;
+      if (!old) return res.status(404).json({ error: 'That version no longer exists' });
+      const clean = cleanSite(JSON.parse(old));
+      const previous = await redis('GET', SITE_KEY);
+      if (previous) await addHistory(previous);
+      await redis('SET', SITE_KEY, JSON.stringify(clean));
+      const next = await redis('INCR', SITE_KEY + ':rev');
+      return res.json({ ok: true, site: clean, rev: next });
+    }
+    if (action === 'upload' && req.method === 'POST') {
+      const { name, type, data } = req.body || {};
+      if (typeof data !== 'string' || !data) throw Error('No image received');
+      const buffer = Buffer.from(data, 'base64');
+      if (buffer.length > 4 * 1024 * 1024) throw Error('Image is too large (max 4 MB after resizing)');
+      const url = await store.uploadImage(buffer, String(type || ''), String(name || 'image'));
+      return res.json({ ok: true, url });
     }
     if (action === 'save' && req.method === 'POST') {
       const { group, record } = req.body || {};

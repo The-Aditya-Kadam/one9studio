@@ -326,3 +326,23 @@ dialog.draft .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .wa-float svg{width:26px;height:26px}
 @media (max-width:640px){.wa-float{padding:14px}.wa-float span{display:none}}
 .nav-cta .btn-wa{padding:12px 18px}
+
+/* Website-editor section types */
+.services-grid.grid-auto .service-card{grid-column:span 4}
+@media (max-width:960px){.services-grid.grid-auto .service-card{grid-column:span 6}}
+@media (max-width:640px){.services-grid.grid-auto .service-card{grid-column:span 12}}
+.case .eyebrow{display:flex}
+.strip li img{height:34px;width:auto;object-fit:contain;filter:grayscale(1);opacity:.75}
+.rich{max-width:820px}
+.rich.center{margin-inline:auto;text-align:center}
+.rich.center .eyebrow{justify-content:center}
+.rich p{color:var(--muted);font-size:1.08rem}
+.dark .rich p{color:var(--muted-light)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.gallery figure{margin:0;border-radius:var(--radius);overflow:hidden;background:var(--ink-3);position:relative}
+.gallery img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.gallery figcaption{padding:12px 16px;font-size:14px;color:var(--muted);background:#fff}
+.dark .gallery figcaption{background:var(--ink-2);color:var(--muted-light)}
+.banner{padding:clamp(80px,12vw,150px) 0;background:var(--ink) center/cover no-repeat;color:#fff}
+.banner h2{max-width:720px}
+.banner p{max-width:600px;color:#d9dbe6;font-size:1.1rem;margin-bottom:28px}

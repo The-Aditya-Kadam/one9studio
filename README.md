@@ -2,74 +2,48 @@
 
 Website and team dashboard for one9studio — *Influence has value and we are turning it into the commercial opportunity.*
 
-## Pages
+## How the website works
 
-| URL | File | What it is |
-|---|---|---|
-| `/` | `index.html` | Home page: hero, 7 services, process, stats, work, roster, events, testimonials, WhatsApp contact |
-| `/brand-management` | `brand-management.html` | Service page |
-| `/social-media-management` | `social-media-management.html` | Service page |
-| `/influencer-management` | `influencer-management.html` | Service page |
-| `/talent-management` | `talent-management.html` | Service page |
-| `/artist-management` | `artist-management.html` | Service page |
-| `/brand-collaborations` | `brand-collaborations.html` | Service page |
-| `/event-show-management` | `event-show-management.html` | Service page |
-| `/dashboard` | `dashboard.html` | Team dashboard (not indexed by search engines) |
-| `/suppliers`, `/diwali-edit` | | Sampling Store pages (unchanged, separate design) |
-| `/coming-soon` | `coming-soon.html` | Old coming-soon page |
+Every page of the website (home, the 7 service pages and any new pages) is **built from the database** when someone visits it. All text, images, sections, menus, contact details and the WhatsApp number are edited in the dashboard under **Website** — no code changes needed.
 
-Every service page has: hero, what's included, why one9studio, process, case study, FAQ, links to the other services, and WhatsApp buttons that open a chat with that service already named in the message.
+- `api/page.js` builds the pages (Vercel serverless function). `vercel.json` sends page addresses (`/`, `/brand-management`, `/about-us` …) to it.
+- `lib/sections.js` — the section types (hero, cards, features, steps, numbers, work, people, events, testimonials, call-to-action, text + photo, case study, FAQ, contact, text block, gallery, banner …) and how each one looks.
+- `lib/render.js` — header, menu, footer and page assembly.
+- `lib/default-site.json` — the starting content. Used until the first time someone publishes from the dashboard, and as a backup if the database can't be reached.
+- `lib/store.js` — database (Upstash Redis) and image uploads (Vercel Blob).
+- Pages are cached for about 30 seconds, so a published change shows on the live site within ~30 seconds.
 
-## WhatsApp — no forms
+`suppliers.html`, `diwali-edit.html` and `coming-soon.html` (Sampling Store) are separate static pages and are not part of the editor.
 
-There are no forms on the site. Every "Chat on WhatsApp" button, the topic buttons in the contact section and the floating chat button (bottom-right on every page) open WhatsApp with a ready-made first message, e.g. *"Hi one9studio, I'm interested in Influencer Management. Can we talk?"*
+## Dashboard → Website
 
-The number is set in two places:
-- `SITE.whatsapp` in `scripts/build-pages.js` — the default, built into the pages (then run the build).
-- **Website content → WhatsApp number** in the dashboard — overrides the default on the live site once the database is connected, no rebuild needed.
-
-The WhatsApp number is `918355874139` (+91 83558 74139).
-
-## Demo content
-
-All names, clients, numbers, case studies, testimonials, events, and the contact email are **demo content**. Photos are free Unsplash images loaded from `images.unsplash.com`. Replace them with real ones before launch.
-
-## Editing the pages
-
-The home page and the 7 service pages are generated from one file so header, footer and WhatsApp buttons stay identical everywhere:
-
-1. Edit the text, images or contact details in `scripts/build-pages.js` (the `SITE`, `SERVICES`, `ROSTER` and `EVENTS` sections).
-2. Run `node scripts/build-pages.js`. It rewrites `index.html`, the 7 service pages and `sitemap.xml`.
-
-Do not hand-edit those 8 HTML files — the next build overwrites them.
-
-Styles: `assets/one9/one9.css` (website) and `assets/one9/dashboard.css` (dashboard). After changing CSS or JS, bump the `?v=` number where the file is linked so browsers pick up the new version.
+- **Pages:** pick a page to see its sections in order. Edit, move up/down, hide/show, duplicate, delete, or **+ Add section** (choose from the section types).
+- **Images:** every image field has **Upload image** (resized automatically in the browser, stored in Vercel Blob) or a box to paste an image link.
+- **New page:** name + address, start blank or as a copy of another page. New pages start **hidden** — switch off "Hidden" in Page settings when ready. Hidden pages can still be checked with the preview link.
+- **Page settings:** name, address, service page (adds it to the Services menu, footer and WhatsApp topic buttons), top-menu link, Google title/description, share image.
+- **Site settings:** WhatsApp number and messages, email, phone, address, menu links, social links, footer text.
+- **Publish to website:** nothing goes live until you click it. **Version history** keeps the last 20 published versions and can restore any of them.
+- Events marked *Published* in **Events & Shows** appear automatically in the events section (when that section has the option switched on).
 
 ## Local preview
 
 ```bash
+npm install
 node scripts/dev-server.js
 ```
 
-Then open http://localhost:4319. The backend does not run locally, so the dashboard shows demo data.
+Open http://localhost:4319 and http://localhost:4319/dashboard. Locally the data is stored in `.devdata/` (not the live database) — delete that folder to start again.
 
-## Dashboard
+## Vercel setup
 
-Sections: Overview, Inquiries, Brand Management, Social Media, Influencers, Talent, Artists, Brand Collaborations, Events & Shows, Website content.
+Framework "Other", no build command, output directory `.`. Vercel installs `@vercel/blob` from `package.json` automatically. Environment variables (already set on the one9studio project):
 
-- **No database connected:** shows sample data (demo mode); changes are not saved.
-- **Database connected:** reads and saves real records; log WhatsApp leads in Inquiries (each lead with a phone number gets a one-click WhatsApp link); events marked *Published* appear on the home page; Website content updates the home page headline, contact details and WhatsApp number.
-
-Setup steps are in [ADMIN_SETUP.md](ADMIN_SETUP.md).
+- `KV_REST_API_URL`, `KV_REST_API_TOKEN` — Upstash Redis database
+- `BLOB_READ_WRITE_TOKEN` — image storage (Blob store `one9studio-images`)
+- `STUDIO_PASSWORD`, `STUDIO_SESSION_SECRET` — dashboard login (used when the login is switched on)
 
 ## Login — currently OFF
 
-`TEMPORARILY_DISABLE_DASHBOARD_LOGIN` in `api/studio.js` is `true`, as requested. Once the database is connected, **anyone who opens `/dashboard` can see and change every record**, including customer names, emails and phone numbers. Set it to `false` (and add `STUDIO_PASSWORD` and `STUDIO_SESSION_SECRET`) to require the team password.
+`TEMPORARILY_DISABLE_DASHBOARD_LOGIN` in `api/studio.js` is `true`, as requested. **Anyone who opens `/dashboard` can change the whole website and see all records.** Set it to `false` to require the team password (`STUDIO_PASSWORD` is already set in Vercel).
 
-## Deployment
-
-**Vercel (main host):** framework "Other", no build command, output directory `.`, repository root. `vercel.json` sets clean URLs, redirects and security headers. `.vercelignore` keeps `scripts/` and docs off the live site.
-
-**Render:** `render.yaml` publishes the static pages only; the dashboard needs Vercel.
-
-Agreed flow: The-Aditya-Kadam/one9studio → agencywork187-commits/one9studio → Vercel.
+Agreed flow: The-Aditya-Kadam/one9studio (main) → Vercel project one9studio (team One9 Studio).

@@ -24,7 +24,7 @@ const PAGES = {
   artists: { group: 'talent', category: 'Artist', title: 'Artists', sub: 'Musicians, DJs, comedians and performers we manage.', noun: 'artist', cols: rosterCols() },
   campaigns: { group: 'campaigns', title: 'Brand Collaborations', sub: 'Partnerships between brands, creators and artists.', noun: 'collaboration', cols: [['name', 'Collaboration', r => `<b>${esc(r.name)}</b><small>${esc(r.brand || '')}</small>`], ['talent', 'Talent / partners'], ['budget', 'Budget'], ['date', 'Launch', r => esc(fmtDate(r.date))], ['status', 'Status', pill]] },
   events: { group: 'events', title: 'Events & Shows', sub: 'Concerts, launches and shows. Published events appear on the website.', noun: 'event', cols: [['name', 'Event', r => `<b>${esc(r.name)}</b><small>${esc(r.type || '')}</small>`], ['date', 'Date', r => esc(fmtDate(r.date))], ['city', 'Location', r => `${esc(r.city || '—')}<small>${esc(r.venue || '')}</small>`], ['status', 'Status', pill]] },
-  website: { title: 'Website content', sub: 'Edit the home page headline and contact details.' },
+  website: { title: 'Website', sub: 'Edit every page, section, image and setting of the live website.' },
 };
 // WhatsApp chat link for a lead's phone number (opens in a new tab, does not open the editor)
 function waLink(phone) { const n = String(phone || '').replace(/[^0-9]/g, ''); return n.length >= 10 ? `<a class="wa-mini" href="https://wa.me/${n.length === 10 ? '91' + n : n}" target="_blank" rel="noopener" data-stop>WhatsApp ↗</a>` : ''; }
@@ -226,25 +226,8 @@ $('#delete-btn').addEventListener('click', async () => {
   } catch (err) { $('#editor-error').textContent = err.message; }
 });
 
-/* ---------- Website content ---------- */
-function renderWebsite() {
-  const c = data.content || { headline: 'Influence has value. We turn it into commercial opportunity.', intro: 'one9studio connects brands, creators and artists — managing reputations, careers, collaborations and live shows that create measurable returns.', email: 'hello@one9studio.in', phone: '+91 83558 74139', whatsapp: '918355874139' };
-  const f = $('#content-form');
-  for (const k of ['headline', 'intro', 'email', 'phone', 'whatsapp']) f.elements[k].value = c[k] || '';
-  $('#content-msg').textContent = '';
-}
-$('#content-form').addEventListener('submit', async e => {
-  e.preventDefault();
-  const body = Object.fromEntries(new FormData(e.target));
-  const msg = $('#content-msg');
-  msg.className = 'form-msg';
-  try {
-    if (demo) { data.content = body; msg.textContent = 'Saved in demo mode only — not published.'; return; }
-    await api('publish', body);
-    data.content = body;
-    msg.textContent = 'Published. The website now shows these details.';
-  } catch (err) { msg.className = 'form-msg err'; msg.textContent = err.message; }
-});
+/* ---------- Website editor (assets/one9/site-editor.js) ---------- */
+function renderWebsite() { window.SiteEditor?.show({ demo, api }); }
 
 /* ---------- Login / logout / menu ---------- */
 $('#login-form').addEventListener('submit', async e => {
